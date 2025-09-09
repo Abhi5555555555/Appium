@@ -375,5 +375,60 @@ public class SwitchHandling {
     }
 }
 
+----------------------------------------------
+# AppManagement
+package Deemo;
+
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import io.appium.java_client.android.AndroidDriver;
+
+public class AppManagement {
+
+	public static void main(String[] args) throws MalformedURLException, InterruptedException {
+		// TODO Auto-generated method stub
+		//Capabilities
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+		capabilities.setCapability("platformName", "Android");
+		capabilities.setCapability("appium:platformVersion", "11");
+		capabilities.setCapability("appium:automationName", "uiautomator2");
+		capabilities.setCapability("appium:deviceName", "Samsung SMA207F");
+		
+		URL url = URI.create("http://127.0.0.1:4723/").toURL();
+		
+		AndroidDriver driver = new AndroidDriver(url,capabilities);
+		Thread.sleep(2000);
+		
+		String packageName = "io.appium.android.apis";
+		
+		driver.removeApp(packageName);
+		
+		if(!driver.isAppInstalled(packageName))
+		{
+			//install application
+			driver.installApp("C:\\Users\\HP\\Desktop\\Apk\\ApiDemos-debug.apk");
+			System.out.println(" App successfully installed. ");
+		}
+		else
+		{
+			System.out.println("App already installed");
+			
+			
+		}
+		//activate the application
+		driver.activateApp(packageName);
+		Thread.sleep(5000);
+		driver.quit();
+		
+	
+
+	}
+
+}
+
 
 
